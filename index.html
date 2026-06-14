@@ -1,0 +1,2560 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>車種車型配對設定</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+  <style>
+    :root {
+      --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-mono: 'SFMono-Regular', Consolas, monospace;
+      --color-background-primary: #ffffff;
+      --color-background-secondary: #f9fafb;
+      --color-background-tertiary: #f3f4f6;
+      --color-text-primary: #111827;
+      --color-text-secondary: #374151;
+      --color-text-tertiary: #9ca3af;
+      --color-border-primary: #374151;
+      --color-border-secondary: #d1d5db;
+      --color-border-tertiary: #e5e7eb;
+      --border-radius-md: 6px;
+      --border-radius-lg: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: #f3f4f6;
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: transparent;
+    }
+
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .page-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .page-sub {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 2px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="page-header">
+      <div>
+        <div class="page-title">車種車型配對設定</div>
+        <div class="page-sub">中古車後台管理系統</div>
+      </div>
+    </div>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      .app {
+        font-family: var(--font-sans);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .tabs {
+        display: flex;
+        border-bottom: 0.5px solid var(--color-border-tertiary);
+        gap: 0;
+      }
+
+      .tab {
+        padding: 10px 18px;
+        font-size: 13px;
+        cursor: pointer;
+        color: var(--color-text-secondary);
+        border-bottom: 2px solid transparent;
+        margin-bottom: -0.5px;
+        transition: color .15s;
+        white-space: nowrap;
+      }
+
+      .tab:hover {
+        color: var(--color-text-primary);
+      }
+
+      .tab.act {
+        color: var(--color-text-primary);
+        font-weight: 500;
+        border-bottom-color: var(--color-text-primary);
+      }
+
+      .pg {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .sw {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 10px;
+        border: 0.5px solid var(--color-border-secondary);
+        border-radius: var(--border-radius-md);
+        background: var(--color-background-primary);
+      }
+
+      .sw i {
+        color: var(--color-text-tertiary);
+        font-size: 15px;
+        flex-shrink: 0;
+      }
+
+      .sw input {
+        flex: 1;
+        border: none;
+        outline: none;
+        font-size: 12px;
+        background: transparent;
+        color: var(--color-text-primary);
+      }
+
+      .sw input::placeholder {
+        color: var(--color-text-tertiary);
+      }
+
+      .clr-btn {
+        font-size: 11px;
+        padding: 2px 7px;
+        border-radius: var(--border-radius-md);
+        border: 0.5px solid var(--color-border-secondary);
+        background: transparent;
+        color: var(--color-text-tertiary);
+        cursor: pointer;
+        display: none;
+        white-space: nowrap;
+      }
+
+      .clr-btn:hover {
+        background: var(--color-background-secondary);
+      }
+
+      .srch-btn {
+        padding: 7px 14px;
+        font-size: 12px;
+        border-radius: var(--border-radius-md);
+        border: none;
+        background: var(--color-text-primary);
+        color: var(--color-background-primary);
+        cursor: pointer;
+        white-space: nowrap;
+      }
+
+      .srch-btn:hover {
+        opacity: .85;
+      }
+
+      .um-btn {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 7px 12px;
+        font-size: 12px;
+        border-radius: var(--border-radius-md);
+        border: 0.5px solid var(--color-border-secondary);
+        background: transparent;
+        color: var(--color-text-secondary);
+        cursor: pointer;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      .um-btn:hover {
+        background: var(--color-background-secondary);
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 18px;
+        height: 18px;
+        padding: 0 5px;
+        border-radius: 9px;
+        font-size: 10px;
+        font-weight: 500;
+        background: #DC2626;
+        color: #fff;
+      }
+
+      .main-area {
+        display: flex;
+        border: 0.5px solid var(--color-border-tertiary);
+        border-radius: var(--border-radius-lg);
+        overflow: hidden;
+        height: calc(100vh - 180px);
+        min-height: 500px;
+      }
+
+      .sidebar {
+        width: 220px;
+        min-width: 220px;
+        border-right: 0.5px solid var(--color-border-tertiary);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sb-top {
+        padding: 8px 10px;
+        border-bottom: 0.5px solid var(--color-border-tertiary);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--color-background-secondary);
+        flex-shrink: 0;
+      }
+
+      .sb-label {
+        font-size: 10px;
+        font-weight: 500;
+        color: var(--color-text-tertiary);
+        letter-spacing: .06em;
+        text-transform: uppercase;
+      }
+
+      .ab {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        padding: 3px 7px;
+        font-size: 11px;
+        border-radius: var(--border-radius-md);
+        border: 0.5px solid var(--color-border-secondary);
+        background: transparent;
+        color: var(--color-text-secondary);
+        cursor: pointer;
+      }
+
+      .ab:hover {
+        background: var(--color-background-primary);
+      }
+
+      .tlist {
+        flex: 1;
+        overflow-y: auto;
+        padding: 4px;
+        background: var(--color-background-secondary);
+      }
+
+      .tc {
+        position: relative;
+        border-radius: var(--border-radius-md);
+        margin-bottom: 3px;
+        border: 0.5px solid transparent;
+        padding: 7px 8px 5px;
+        transition: background .1s;
+        user-select: none;
+        cursor: pointer;
+      }
+
+      .tc.vt {
+        background: var(--color-background-primary);
+        border-color: var(--color-border-tertiary);
+      }
+
+      .tc.vt:hover {
+        border-color: var(--color-border-secondary);
+      }
+
+      .tc.vt.act {
+        border-color: var(--color-border-primary);
+        box-shadow: 0 0 0 1px var(--color-border-secondary);
+      }
+
+      .tc.ht {
+        background: rgba(0, 0, 0, .03);
+        border-color: var(--color-border-tertiary);
+        border-style: dashed;
+      }
+
+      .tc.ht:hover {
+        background: var(--color-background-primary);
+        border-style: solid;
+        border-color: var(--color-border-secondary);
+      }
+
+      .tc.ht.act {
+        background: var(--color-background-primary);
+        border-style: solid;
+        border-color: var(--color-border-secondary);
+      }
+
+      .tc.sdim {
+        opacity: .55;
+      }
+
+      .tc.shl.vt {
+        border-color: #2563EB;
+        box-shadow: 0 0 0 1px #93C5FD;
+      }
+
+      .tc.shl.ht {
+        border-color: #2563EB;
+        border-style: solid;
+        box-shadow: 0 0 0 1px #93C5FD;
+      }
+
+      .tc.is-drag {
+        opacity: .35;
+      }
+
+      .tc.drag-ov {
+        border-top: 2px solid #2563EB;
+      }
+
+      .tc-row1 {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-bottom: 4px;
+      }
+
+      .grip {
+        color: var(--color-text-tertiary);
+        font-size: 13px;
+        cursor: grab;
+        flex-shrink: 0;
+        padding: 1px;
+      }
+
+      .grip:active {
+        cursor: grabbing;
+      }
+
+      .tc-name {
+        flex: 1;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .tc.ht .tc-name {
+        color: var(--color-text-secondary);
+      }
+
+      .hp {
+        font-size: 9px;
+        background: #FEF3C7;
+        color: #B45309;
+        border-radius: 6px;
+        padding: 1px 5px;
+        flex-shrink: 0;
+        white-space: nowrap;
+      }
+
+      .tc-row2 {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 1px;
+      }
+
+      .ib {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 3px 4px;
+        border-radius: 4px;
+        color: var(--color-text-tertiary);
+        font-size: 12px;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+      }
+
+      .ib:hover {
+        background: var(--color-background-secondary);
+        color: var(--color-text-primary);
+      }
+
+      .ib.von {
+        color: #2563EB;
+      }
+
+      .ib.dng:hover {
+        color: #DC2626;
+        background: #FEF2F2;
+      }
+
+      .ib.ok:hover {
+        color: #059669;
+        background: #ECFDF5;
+      }
+
+      .ib.dis {
+        opacity: .25;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+
+      .right {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+      }
+
+      .rhd {
+        padding: 8px 14px;
+        border-bottom: 0.5px solid var(--color-border-tertiary);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+      }
+
+      .rtitle {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+      }
+
+      .rsub {
+        font-size: 11px;
+        color: var(--color-text-tertiary);
+        margin-top: 1px;
+      }
+
+      .rbody {
+        flex: 1;
+        overflow-y: auto;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 5px 10px;
+        font-size: 11px;
+        border-radius: var(--border-radius-md);
+        border: 0.5px solid var(--color-border-secondary);
+        background: transparent;
+        color: var(--color-text-secondary);
+        cursor: pointer;
+        white-space: nowrap;
+      }
+
+      .btn:hover {
+        background: var(--color-background-secondary);
+      }
+
+      .btn-p {
+        background: var(--color-text-primary);
+        color: var(--color-background-primary);
+        border-color: var(--color-text-primary);
+      }
+
+      .btn-p:hover {
+        opacity: .85;
+        background: var(--color-text-primary);
+      }
+
+      .btn-d {
+        background: #DC2626;
+        color: #fff;
+        border-color: #DC2626;
+      }
+
+      .btn-d:hover {
+        background: #b91c1c;
+      }
+
+      .btn-s {
+        background: #16A34A;
+        color: #fff;
+        border-color: #16A34A;
+      }
+
+      .btn-s:hover {
+        background: #15803D;
+      }
+
+      .tbl {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 11px;
+      }
+
+      .tbl th {
+        padding: 6px 8px;
+        text-align: left;
+        font-size: 10px;
+        font-weight: 500;
+        color: var(--color-text-tertiary);
+        letter-spacing: .04em;
+        border-bottom: 0.5px solid var(--color-border-tertiary);
+        background: var(--color-background-secondary);
+        white-space: nowrap;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+      }
+
+      .tbl th.c {
+        text-align: center;
+      }
+
+      .tbl td {
+        padding: 6px 8px;
+        border-bottom: 0.5px solid var(--color-border-tertiary);
+        vertical-align: middle;
+      }
+
+      .tbl td.mu {
+        color: var(--color-text-secondary);
+      }
+
+      .tbl td.c {
+        text-align: center;
+      }
+
+      .tbl td.c .ib {
+        margin: 0 auto;
+        justify-content: center;
+      }
+
+      .tbl tr:last-child td {
+        border-bottom: none;
+      }
+
+      .tbl tr:hover td {
+        background: var(--color-background-secondary);
+      }
+
+      .tbl tr.srch-hl td {
+        background: #EFF6FF;
+      }
+
+      .tbl tr.expanded td {
+        background: var(--color-background-secondary);
+      }
+
+      .cc {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        background: var(--color-background-secondary);
+        border: 0.5px solid var(--color-border-tertiary);
+        border-radius: 4px;
+        padding: 2px 5px;
+        color: var(--color-text-secondary);
+      }
+
+      .audit-cell {
+        white-space: nowrap;
+      }
+
+      .audit-date {
+        font-size: 10px;
+        color: var(--color-text-secondary);
+      }
+
+      .audit-user {
+        font-size: 10px;
+        color: var(--color-text-tertiary);
+        margin-top: 1px;
+      }
+
+      .status-dot {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        flex-shrink: 0;
+        border: none;
+        padding: 0;
+      }
+
+      .status-dot.complete {
+        background: #F0FDF4;
+        color: #16A34A;
+        border: 1.5px solid #16A34A;
+      }
+
+      .status-dot.incomplete {
+        background: #FEFCE8;
+        color: #EAB308;
+        border: 1.5px solid #EAB308;
+      }
+
+      .status-dot i {
+        font-size: 11px;
+      }
+
+      .edit-row td {
+        padding: 0 !important;
+        border-bottom: 0.5px solid var(--color-border-tertiary);
+      }
+
+      .edit-panel {
+        padding: 12px 14px;
+        background: #F8FAFC;
+        border-top: 0.5px solid var(--color-border-tertiary);
+      }
+
+      .edit-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px 12px;
+        margin-bottom: 12px;
+      }
+
+      .edit-field label {
+        font-size: 10px;
+        color: var(--color-text-tertiary);
+        display: block;
+        margin-bottom: 3px;
+      }
+
+      .edit-field label .lbl-hint {
+        font-weight: normal;
+        font-size: 9px;
+        margin-left: 4px;
+        display: inline-block;
+      }
+
+      .edit-field label .lbl-hint.sync {
+        color: #2563EB;
+      }
+
+      .edit-field label .lbl-hint.src {
+        color: #64748B;
+      }
+
+      .edit-field input,
+      .edit-field select {
+        width: 100%;
+        padding: 5px 7px;
+        font-size: 12px;
+        border: 0.5px solid var(--color-border-secondary);
+        border-radius: var(--border-radius-md);
+        background: var(--color-background-primary);
+        color: var(--color-text-primary);
+        outline: none;
+      }
+
+      .edit-field input:focus,
+      .edit-field select:focus {
+        border-color: var(--color-border-primary);
+      }
+
+      .edit-field input.missing,
+      .edit-field select.missing {
+        border-color: #EAB308;
+        background: #FEFCE8;
+      }
+
+      .edit-field input[readonly],
+      .edit-field select:disabled {
+        background: var(--color-background-tertiary);
+        color: var(--color-text-tertiary);
+        cursor: not-allowed;
+        border-color: var(--color-border-tertiary);
+      }
+
+      input[type="number"].no-spin::-webkit-outer-spin-button,
+      input[type="number"].no-spin::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      input[type="number"].no-spin {
+        -moz-appearance: textfield;
+      }
+
+      .edit-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 6px;
+      }
+
+      .nosel {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        color: var(--color-text-tertiary);
+        gap: 8px;
+      }
+
+      .nosel i {
+        font-size: 28px;
+      }
+
+      .nosel p {
+        font-size: 12px;
+      }
+
+      .maint-top {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 4px;
+      }
+
+      .maint-summary {
+        font-size: 12px;
+        color: var(--color-text-secondary);
+      }
+
+      .filter-btns {
+        display: flex;
+        gap: 4px;
+        margin-left: auto;
+      }
+
+      .fbtn {
+        padding: 4px 10px;
+        font-size: 11px;
+        border-radius: var(--border-radius-md);
+        border: 0.5px solid var(--color-border-secondary);
+        background: transparent;
+        color: var(--color-text-secondary);
+        cursor: pointer;
+      }
+
+      .fbtn:hover {
+        background: var(--color-background-secondary);
+      }
+
+      .fbtn.act {
+        background: var(--color-text-primary);
+        color: var(--color-background-primary);
+        border-color: var(--color-text-primary);
+      }
+
+      .maint-table-wrap {
+        border: 0.5px solid var(--color-border-tertiary);
+        border-radius: var(--border-radius-lg);
+        overflow: hidden;
+        flex: 1;
+      }
+
+      .mtbl {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 11px;
+      }
+
+      .mtbl th {
+        padding: 6px 8px;
+        text-align: left;
+        font-size: 10px;
+        font-weight: 500;
+        color: var(--color-text-tertiary);
+        letter-spacing: .04em;
+        border-bottom: 0.5px solid var(--color-border-tertiary);
+        background: var(--color-background-secondary);
+        white-space: nowrap;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+      }
+
+      .mtbl td {
+        padding: 6px 8px;
+        border-bottom: 0.5px solid var(--color-border-tertiary);
+        vertical-align: middle;
+      }
+
+      .mtbl tr:last-child td {
+        border-bottom: none;
+      }
+
+      .mtbl tr:hover td {
+        background: var(--color-background-secondary);
+      }
+
+      .mtbl tr.mexpanded td {
+        background: #F8FAFC;
+      }
+
+      .miss-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        padding: 2px 6px;
+        border-radius: 8px;
+        font-size: 10px;
+        background: #FEFCE8;
+        color: #854D0E;
+        border: 0.5px solid #FDE68A;
+        margin: 1px;
+      }
+
+      .mbd {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, .3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
+      }
+
+      .mo {
+        background: var(--color-background-primary);
+        border-radius: var(--border-radius-lg);
+        border: 0.5px solid var(--color-border-secondary);
+        padding: 18px 20px;
+        width: 400px;
+        max-height: 90vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .mo.wide {
+        width: 1050px;
+      }
+
+      .mo.sm {
+        width: 340px;
+      }
+
+      .moti {
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 12px;
+        color: var(--color-text-primary);
+        flex-shrink: 0;
+      }
+
+      .mbt {
+        font-size: 12px;
+        color: var(--color-text-secondary);
+        line-height: 1.6;
+      }
+
+      .mwarn {
+        font-size: 12px;
+        color: #DC2626;
+        background: #FEF2F2;
+        border-radius: var(--border-radius-md);
+        padding: 8px 10px;
+        margin-top: 8px;
+      }
+
+      .fl {
+        font-size: 11px;
+        color: var(--color-text-secondary);
+        margin-bottom: 4px;
+        display: block;
+        flex-shrink: 0;
+      }
+
+      .fi {
+        width: 100%;
+        padding: 7px 9px;
+        font-size: 12px;
+        border: 0.5px solid var(--color-border-secondary);
+        border-radius: var(--border-radius-md);
+        background: var(--color-background-primary);
+        color: var(--color-text-primary);
+        outline: none;
+        flex-shrink: 0;
+      }
+
+      .fi:focus {
+        border-color: var(--color-border-primary);
+      }
+
+      .fi.err {
+        border-color: #DC2626;
+      }
+
+      .emsg {
+        font-size: 11px;
+        color: #DC2626;
+        margin-top: 4px;
+        min-height: 14px;
+        flex-shrink: 0;
+      }
+
+      .mf {
+        display: flex;
+        justify-content: flex-end;
+        gap: 6px;
+        margin-top: 12px;
+        flex-shrink: 0;
+      }
+
+      .ddl {
+        border: 0.5px solid var(--color-border-secondary);
+        border-radius: var(--border-radius-md);
+        overflow-y: auto;
+        margin-top: 4px;
+        flex: 1;
+      }
+
+      .ddi {
+        padding: 6px 10px;
+        font-size: 12px;
+        cursor: pointer;
+        display: flex;
+        gap: 8px;
+        align-items: baseline;
+      }
+
+      .ddi:hover {
+        background: var(--color-background-secondary);
+      }
+
+      .ddc {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--color-text-tertiary);
+        flex-shrink: 0;
+      }
+
+      .ddn {
+        color: var(--color-text-primary);
+      }
+
+      .dde {
+        font-size: 10px;
+        color: var(--color-text-tertiary);
+      }
+
+      .ddi.tk {
+        opacity: .6;
+        cursor: pointer;
+      }
+
+      .ddempty {
+        padding: 10px;
+        font-size: 12px;
+        color: var(--color-text-tertiary);
+        text-align: center;
+      }
+
+      .sel-info {
+        background: var(--color-background-secondary);
+        border-radius: var(--border-radius-md);
+        padding: 12px 14px;
+        margin-bottom: 8px;
+        font-size: 12px;
+        color: var(--color-text-primary);
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .type-checks {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        overflow-y: auto;
+        border: 0.5px solid var(--color-border-tertiary);
+        border-radius: var(--border-radius-md);
+        padding: 4px;
+        flex: 1;
+      }
+
+      .tc-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 5px 6px;
+        border-radius: var(--border-radius-md);
+        cursor: pointer;
+      }
+
+      .tc-item:hover {
+        background: var(--color-background-secondary);
+      }
+
+      .tc-item input[type=checkbox] {
+        accent-color: #2563EB;
+        width: 13px;
+        height: 13px;
+        flex-shrink: 0;
+      }
+
+      .tc-label {
+        font-size: 12px;
+        color: var(--color-text-primary);
+        flex: 1;
+      }
+
+      .tc-hid {
+        font-size: 10px;
+        color: #B45309;
+        background: #FEF3C7;
+        border-radius: 4px;
+        padding: 1px 5px;
+        margin-left: 4px;
+      }
+
+      .tc-item.already {
+        opacity: .45;
+        pointer-events: none;
+      }
+
+      .am-hint {
+        font-size: 11px;
+        color: var(--color-text-tertiary);
+        margin-top: 5px;
+        flex-shrink: 0;
+      }
+
+      .ums {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 8px;
+        border: 0.5px solid var(--color-border-secondary);
+        border-radius: var(--border-radius-md);
+        margin-bottom: 8px;
+        flex-shrink: 0;
+      }
+
+      .ums i {
+        color: var(--color-text-tertiary);
+        font-size: 14px;
+      }
+
+      .ums input {
+        flex: 1;
+        border: none;
+        outline: none;
+        font-size: 12px;
+        background: transparent;
+        color: var(--color-text-primary);
+      }
+
+      .umtw {
+        flex: 1;
+        overflow-y: auto;
+        border: 0.5px solid var(--color-border-tertiary);
+        border-radius: var(--border-radius-md);
+      }
+
+      .umt {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 11px;
+      }
+
+      .umt th {
+        padding: 6px 8px;
+        font-size: 10px;
+        font-weight: 500;
+        color: var(--color-text-tertiary);
+        border-bottom: 0.5px solid var(--color-border-tertiary);
+        background: var(--color-background-secondary);
+        position: sticky;
+        top: 0;
+        text-align: left;
+        white-space: nowrap;
+      }
+
+      .umt td {
+        padding: 5px 8px;
+        border-bottom: 0.5px solid var(--color-border-tertiary);
+        vertical-align: middle;
+      }
+
+      .umt tr:last-child td {
+        border-bottom: none;
+      }
+
+      .umft {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 8px;
+        flex-shrink: 0;
+      }
+
+      .umst {
+        font-size: 11px;
+        color: var(--color-text-tertiary);
+      }
+
+      .umst b {
+        color: #1D4ED8;
+      }
+
+      .mc-wrap {
+        position: relative;
+      }
+
+      .mc-display {
+        min-height: 28px;
+        padding: 3px 7px;
+        border: 0.5px solid var(--color-border-secondary);
+        border-radius: var(--border-radius-md);
+        background: var(--color-background-primary);
+        cursor: pointer;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 3px;
+        align-items: center;
+      }
+
+      .mc-display:hover {
+        border-color: var(--color-border-primary);
+      }
+
+      .mc-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        padding: 2px 6px;
+        border-radius: 8px;
+        font-size: 10px;
+        background: #EFF6FF;
+        color: #1D4ED8;
+        border: 0.5px solid #BFDBFE;
+      }
+
+      .mc-chip .rx {
+        cursor: pointer;
+        color: #93C5FD;
+        font-size: 12px;
+        line-height: 1;
+      }
+
+      .mc-chip .rx:hover {
+        color: #1D4ED8;
+      }
+
+      .mc-ph {
+        font-size: 11px;
+        color: var(--color-text-tertiary);
+      }
+
+      .mc-dd {
+        position: absolute;
+        top: calc(100% + 3px);
+        left: 0;
+        right: 0;
+        background: var(--color-background-primary);
+        border: 0.5px solid var(--color-border-secondary);
+        border-radius: var(--border-radius-md);
+        z-index: 10;
+        max-height: 220px;
+        display: flex;
+        flex-direction: column;
+        display: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+      }
+
+      .mc-dd.open {
+        display: flex;
+      }
+
+      .mc-search-box {
+        padding: 6px;
+        border-bottom: 0.5px solid var(--color-border-tertiary);
+        background: var(--color-background-secondary);
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+      }
+
+      .mc-search-box i {
+        color: var(--color-text-tertiary);
+        font-size: 12px;
+      }
+
+      .mc-search-input {
+        flex: 1;
+        border: none;
+        outline: none;
+        font-size: 11px;
+        background: transparent;
+        padding: 2px 4px;
+        color: var(--color-text-primary);
+      }
+
+      .mc-opts-list {
+        flex: 1;
+        overflow-y: auto;
+        max-height: 150px;
+      }
+
+      .mc-opt {
+        padding: 5px 10px;
+        font-size: 11px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+
+      .mc-opt:hover {
+        background: var(--color-background-secondary);
+      }
+
+      .mc-opt input {
+        accent-color: #2563EB;
+        width: 12px;
+        height: 12px;
+        flex-shrink: 0;
+      }
+
+      .hid-tag {
+        font-size: 10px;
+        color: #B45309;
+        background: #FEF3C7;
+        border-radius: 4px;
+        padding: 1px 5px;
+        margin-left: 3px;
+      }
+
+      .toast {
+        position: fixed;
+        bottom: 18px;
+        right: 18px;
+        background: var(--color-text-primary);
+        color: var(--color-background-primary);
+        padding: 7px 12px;
+        border-radius: var(--border-radius-md);
+        font-size: 12px;
+        opacity: 0;
+        transform: translateY(4px);
+        transition: opacity .2s, transform .2s;
+        pointer-events: none;
+        z-index: 200;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* 側邊抽屜樣式 */
+      .drawer-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 140;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+      }
+
+      .drawer-overlay.open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .drawer {
+        position: fixed;
+        top: 0;
+        right: -460px;
+        width: 460px;
+        height: 100vh;
+        background: var(--color-background-primary);
+        box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+        z-index: 150;
+        transition: right 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .drawer.open {
+        right: 0;
+      }
+
+      .drawer-header {
+        padding: 14px 20px;
+        border-bottom: 0.5px solid var(--color-border-tertiary);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--color-background-secondary);
+      }
+
+      .drawer-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--color-text-primary);
+      }
+
+      .drawer-body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+      }
+
+      .drawer-footer {
+        padding: 14px 20px;
+        border-top: 0.5px solid var(--color-border-tertiary);
+        background: var(--color-background-secondary);
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+
+      .drawer-field-group {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .drawer-field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .drawer-field label {
+        font-size: 11px;
+        color: var(--color-text-tertiary);
+        font-weight: 500;
+      }
+
+      .drawer-field label .lbl-hint {
+        font-weight: normal;
+        font-size: 9px;
+        margin-left: 4px;
+        display: inline-block;
+      }
+
+      .drawer-field label .lbl-hint.sync {
+        color: #2563EB;
+      }
+
+      .drawer-field label .lbl-hint.src {
+        color: #64748B;
+      }
+    </style>
+
+    <div class="app">
+      <div class="pg">
+        <div class="topbar"
+          style="display:flex; align-items:flex-end; gap:8px; flex-wrap:wrap; padding:10px 14px; background:var(--color-background-secondary); border-radius:var(--border-radius-md); margin-bottom:12px;">
+          <div style="display:flex; flex-direction:column; gap:4px; width:140px;">
+            <label style="font-size:11px; color:var(--color-text-secondary); font-weight:500;">車型代碼</label>
+            <input class="fi" id="gSrchCode" placeholder="輸入代碼"
+              style="margin-bottom:0; font-size:11px; height:28px; padding:3px 8px; border:0.5px solid var(--color-border-secondary); border-radius:var(--border-radius-md); outline:none; background:var(--color-background-primary); color:var(--color-text-primary);">
+          </div>
+          <div style="display:flex; flex-direction:column; gap:4px; width:140px;">
+            <label style="font-size:11px; color:var(--color-text-secondary); font-weight:500;">廠牌</label>
+            <select id="gSrchBrand"
+              style="font-size:11px; height:28px; padding:3px 8px; border:0.5px solid var(--color-border-secondary); border-radius:var(--border-radius-md); background:var(--color-background-primary); color:var(--color-text-primary); outline:none; cursor:pointer;">
+              <option value="">全部</option>
+            </select>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:4px; width:140px;">
+            <label style="font-size:11px; color:var(--color-text-secondary); font-weight:500;">車型</label>
+            <select id="gSrchName"
+              style="font-size:11px; height:28px; padding:3px 8px; border:0.5px solid var(--color-border-secondary); border-radius:var(--border-radius-md); background:var(--color-background-primary); color:var(--color-text-primary); outline:none; cursor:pointer;">
+              <option value="">全部</option>
+            </select>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:4px; width:140px;">
+            <label style="font-size:11px; color:var(--color-text-secondary); font-weight:500;">資料狀態</label>
+            <select id="gSrchStatus"
+              style="font-size:11px; height:28px; padding:3px 8px; border:0.5px solid var(--color-border-secondary); border-radius:var(--border-radius-md); background:var(--color-background-primary); color:var(--color-text-primary); outline:none; cursor:pointer;">
+              <option value="all">全部</option>
+              <option value="incomplete">資料不完整</option>
+              <option value="complete">資料完整</option>
+            </select>
+          </div>
+          <div style="display:flex; gap:6px; margin-left:auto; align-items:center;">
+            <button class="btn" id="gClr"
+              style="font-size:11px; height:28px; padding:0 12px; display:inline-flex; align-items:center; gap:3px;"><i
+                class="ti ti-rotate" style="font-size:12px"></i> 清除</button>
+            <button class="btn btn-p" id="gBtn"
+              style="font-size:11px; height:28px; padding:0 12px; display:inline-flex; align-items:center; gap:3px;"><i
+                class="ti ti-search" style="font-size:12px"></i> 查詢</button>
+            <button class="btn btn-badge" id="umBtn"
+              style="font-size:11px; height:28px; padding:0 12px; display:inline-flex; align-items:center; gap:6px; background:#D97706; color:#fff; border:none; border-radius:var(--border-radius-md); font-weight:600; cursor:pointer;">
+              <i class="ti ti-help-circle" style="font-size:12px"></i> 待確認配對
+              <span class="badge" id="umBadge"
+                style="background:#fff; color:#D97706; font-size:10px; padding:1px 6px; border-radius:10px; font-weight:700;">0</span>
+            </button>
+          </div>
+        </div>
+        <div class="main-area">
+          <div class="sidebar">
+            <div class="sb-top"><span class="sb-label">車種</span><button class="ab" id="addTypeBtn"><i class="ti ti-plus"
+                  aria-hidden="true"></i>新增</button></div>
+            <div class="tlist" id="tlist"></div>
+          </div>
+          <div class="right">
+            <div class="rhd">
+              <div>
+                <div class="rtitle" id="rtitle">請選擇車種</div>
+                <div class="rsub" id="rsub">點選左側車種以查看配對車型</div>
+              </div>
+            </div>
+            <div class="rbody" id="rbody">
+              <div class="nosel"><i class="ti ti-table" aria-hidden="true"></i>
+                <p>選擇左側車種以查看配對車型</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mbd" id="etMo" style="display:none">
+      <div class="mo sm" onclick="event.stopPropagation()">
+        <div class="moti" id="etTi">新增車種</div>
+        <label class="fl">車種名稱（2–8 字）</label>
+        <input class="fi" id="etIn" maxlength="8" placeholder="例：休旅車">
+        <div class="emsg" id="etEr"></div>
+        <div style="font-size:11px;color:var(--color-text-tertiary);margin-top:2px;">最多 8 字，最少 2 字，不可重複</div>
+        <div class="mf"><button class="btn" id="etCx">取消</button><button class="btn btn-p" id="etSv">儲存</button></div>
+      </div>
+    </div>
+
+    <div class="mbd" id="dtMo" style="display:none">
+      <div class="mo sm" onclick="event.stopPropagation()">
+        <div class="moti" id="dtTi"></div>
+        <div class="mbt" id="dtBo"></div>
+        <div class="mwarn" id="dtWn" style="display:none"></div>
+        <div class="mf" id="dtFt"></div>
+      </div>
+    </div>
+
+    <div class="mbd" id="amMo" style="display:none">
+      <div class="mo" onclick="event.stopPropagation()" style="height:460px;">
+        <div class="moti">加入車型</div>
+        <div id="amStep1" style="display:flex;flex-direction:column;flex:1;min-height:0;">
+          <div class="am-search-grid"
+            style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px; margin-bottom:8px;">
+            <div class="am-search-field" style="display:flex; flex-direction:column; gap:4px;">
+              <label style="font-size:11px; color:var(--color-text-secondary); font-weight:500;">車型代碼</label>
+              <input class="fi" id="amSrchCode" placeholder="輸入代碼"
+                style="margin-bottom:0; font-size:11px; height:28px; padding:3px 8px; border:0.5px solid var(--color-border-secondary); border-radius:var(--border-radius-md); outline:none;">
+            </div>
+            <div class="am-search-field" style="display:flex; flex-direction:column; gap:4px;">
+              <label style="font-size:11px; color:var(--color-text-secondary); font-weight:500;">廠牌</label>
+              <select id="amSrchBrand"
+                style="font-size:11px; height:28px; padding:3px 8px; border:0.5px solid var(--color-border-secondary); border-radius:var(--border-radius-md); background:var(--color-background-primary); color:var(--color-text-primary); outline:none; cursor:pointer;">
+                <option value="">全部</option>
+              </select>
+            </div>
+            <div class="am-search-field" style="display:flex; flex-direction:column; gap:4px;">
+              <label style="font-size:11px; color:var(--color-text-secondary); font-weight:500;">車型</label>
+              <select id="amSrchName"
+                style="font-size:11px; height:28px; padding:3px 8px; border:0.5px solid var(--color-border-secondary); border-radius:var(--border-radius-md); background:var(--color-background-primary); color:var(--color-text-primary); outline:none; cursor:pointer;">
+                <option value="">全部</option>
+              </select>
+            </div>
+          </div>
+          <div style="display:flex; justify-content:flex-end; gap:6px; margin-bottom:8px;">
+            <button class="btn" id="amResetBtn"
+              style="font-size:11px; height:26px; padding:0 12px; display:inline-flex; align-items:center; gap:3px;"><i
+                class="ti ti-rotate" style="font-size:12px"></i> 清除</button>
+            <button class="btn btn-p" id="amQueryBtn"
+              style="font-size:11px; height:26px; padding:0 12px; display:inline-flex; align-items:center; gap:3px;"><i
+                class="ti ti-search" style="font-size:12px"></i> 查詢</button>
+          </div>
+          <div class="emsg" id="amEr"></div>
+          <div class="ddl" id="amDd"></div>
+        </div>
+        <div id="amStep2" style="display:none;flex-direction:column;flex:1;min-height:0;">
+          <div class="sel-info" id="amModelInfo"></div>
+          <label class="fl">選擇要配對的車種（可多選）</label>
+          <div class="type-checks" id="amTypeChecks"></div>
+          <div class="am-hint" id="amHint"></div>
+        </div>
+        <div class="mf">
+          <button class="btn" id="amCx">取消</button>
+          <button class="btn" id="amBack" style="display:none">← 重新選擇</button>
+          <button class="btn btn-p" id="amCf" style="display:none">加入</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="mbd" id="rmMo" style="display:none">
+      <div class="mo sm" onclick="event.stopPropagation()">
+        <div class="moti">移除配對</div>
+        <div class="mbt" id="rmBo"></div>
+        <div class="mf"><button class="btn" id="rmCx">取消</button><button class="btn btn-d" id="rmCf">確定移除</button></div>
+      </div>
+    </div>
+
+    <div class="mbd" id="umMo" style="display:none">
+      <div class="mo" onclick="event.stopPropagation()"
+        style="width:1050px; max-width:95vw; height:580px; display:flex; flex-direction:column;">
+        <div class="moti" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <span>待確認配對設定</span>
+          <span style="font-size:12px; font-weight:normal; color:var(--color-text-secondary);" id="umSt">共 0 筆待確認</span>
+        </div>
+
+        <div
+          style="flex:1; overflow-y:auto; border:0.5px solid var(--color-border-secondary); border-radius:var(--border-radius-md); background:var(--color-background-primary); margin-bottom:16px;">
+          <table class="tbl" style="width:100%; border-collapse:collapse;">
+            <thead style="position:sticky; top:0; background:var(--color-background-secondary); z-index:10;">
+              <tr>
+                <th class="c" style="width:32px;"></th>
+                <th>車型代碼</th>
+                <th>廠牌</th>
+                <th>車型</th>
+                <th>車型明細</th>
+                <th>出廠年份</th>
+                <th>排氣量</th>
+                <th>能源種類</th>
+                <th style="min-width:150px;">指定車種（單選）</th>
+              </tr>
+            </thead>
+            <tbody id="umTb">
+              <!-- 會動態渲染未配對車型 -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mf" style="display:flex; justify-content:flex-end; gap:8px;">
+          <button class="btn" id="umCx">關閉</button>
+          <button class="btn btn-p" id="umSv" style="display:none;"><i class="ti ti-check" style="font-size:12px"></i>
+            儲存</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 側邊抽屜 (Side Drawer) -->
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <div class="drawer" id="sideDrawer">
+      <div class="drawer-header">
+        <div class="drawer-title" id="drawerTitle">編輯車型資料</div>
+        <button class="ib" id="drawerClose" style="font-size: 16px; padding: 4px;"><i class="ti ti-x"></i></button>
+      </div>
+      <div class="drawer-body" id="drawerBody">
+        <!-- 這裡將動態渲染編輯表單 -->
+      </div>
+      <div class="drawer-footer" style="display:flex; flex-direction:column; gap:8px; align-items:stretch;">
+        <div style="font-size:11px; color:#2563EB; text-align:right; font-weight:500;">* 儲存後，資料將自動同步至CRS</div>
+        <div style="display:flex; justify-content:flex-end; gap:8px;">
+          <button class="btn" id="drawerCancel">取消</button>
+          <button class="btn btn-p" id="drawerSave"><i class="ti ti-check" style="font-size:12px"></i> 儲存變更</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      var NOW_USER = 'K1234';
+      function nowStr() { var d = new Date(); return d.getFullYear() + '/' + (String(d.getMonth() + 1).padStart(2, '0')) + '/' + String(d.getDate()).padStart(2, '0'); }
+      function auditNow() { return { date: nowStr(), user: NOW_USER }; }
+      var REQUIRED_FIELDS = [
+        { key: 'doors', label: '車門數' }, { key: 'seats', label: '座位數' }, { key: 'seriesOrigin', label: '產地' },
+        { key: 'engineCapacity', label: '排氣量' }, { key: 'fuelType', label: '能源種類' },
+        { key: 'drivetrain', label: '傳動方式' }, { key: 'transmissionType', label: '變速箱' }, { key: 'makeYear', label: '出廠年份' },
+      ];
+      var AM = [
+        { code: '10000001', brand: 'Toyota', name: 'Camry', classDetail: '豪華版', makeYear: '2022', seats: 5, engineCapacity: 2000, fuelType: 'GASOLINE', horsepower: 165, torque: 205, drivetrain: 'FWD', transmissionType: 'AT', doors: 4, seriesOrigin: 'IMPORT' },
+        { code: '10000002', brand: 'Honda', name: 'Accord', classDetail: '旗艦版', makeYear: '2022', seats: 5, engineCapacity: 1500, fuelType: 'HEV', horsepower: 150, torque: 175, drivetrain: 'FWD', transmissionType: 'CVT', doors: 4, seriesOrigin: 'IMPORT' },
+        { code: '10000003', brand: 'Mazda', name: 'Mazda 6', classDetail: 'Sport版', makeYear: '2021', seats: 5, engineCapacity: 2500, fuelType: 'GASOLINE', horsepower: 192, torque: 258, drivetrain: 'FWD', transmissionType: 'AT', doors: 4, seriesOrigin: 'IMPORT' },
+        { code: '10000004', brand: 'Nissan', name: 'Tiida', classDetail: '標準版', makeYear: '', seats: 5, engineCapacity: 1600, fuelType: 'GASOLINE', horsepower: null, torque: null, drivetrain: '', transmissionType: '', doors: 4, seriesOrigin: '' },
+        { code: '20000001', brand: 'Toyota', name: 'RAV4', classDetail: '豪華版', makeYear: '2023', seats: 5, engineCapacity: 2000, fuelType: 'HEV', horsepower: 222, torque: null, drivetrain: 'AWD', transmissionType: 'CVT', doors: 4, seriesOrigin: 'IMPORT' },
+        { code: '20000002', brand: 'Honda', name: 'CR-V', classDetail: '', makeYear: '2022', seats: 5, engineCapacity: 1500, fuelType: 'PHEV', horsepower: null, torque: null, drivetrain: 'AWD', transmissionType: 'AT', doors: 4, seriesOrigin: '' },
+        { code: '20000003', brand: 'Ford', name: 'Escape', classDetail: 'EcoBoost', makeYear: '2021', seats: 5, engineCapacity: 1500, fuelType: 'GASOLINE', horsepower: 180, torque: 240, drivetrain: 'FWD', transmissionType: 'AT', doors: 4, seriesOrigin: 'IMPORT' },
+        { code: '30000001', brand: 'Subaru', name: 'Outback', classDetail: '', makeYear: '', seats: 5, engineCapacity: 2500, fuelType: 'GASOLINE', horsepower: null, torque: null, drivetrain: 'AWD', transmissionType: 'CVT', doors: 4, seriesOrigin: '' },
+        { code: '30000002', brand: 'Volkswagen', name: 'Golf Variant', classDetail: '280 TSI', makeYear: '2022', seats: 5, engineCapacity: 1400, fuelType: 'GASOLINE', horsepower: 150, torque: 250, drivetrain: 'FWD', transmissionType: 'AT', doors: 4, seriesOrigin: 'IMPORT' },
+        { code: '40000001', brand: 'Toyota', name: 'Hiace', classDetail: '', makeYear: '2021', seats: 9, engineCapacity: 2700, fuelType: 'GASOLINE', horsepower: null, torque: null, drivetrain: 'RWD', transmissionType: 'AT', doors: 2, seriesOrigin: 'IMPORT' },
+        { code: '40000002', brand: 'Ford', name: 'Transit', classDetail: '', makeYear: '', seats: 9, engineCapacity: 2000, fuelType: 'DIESEL', horsepower: null, torque: null, drivetrain: 'RWD', transmissionType: 'MT', doors: 2, seriesOrigin: '' },
+        { code: '40000003', brand: 'Nissan', name: 'Urvan', classDetail: '', makeYear: '2020', seats: 12, engineCapacity: 2500, fuelType: 'GASOLINE', horsepower: 120, torque: 196, drivetrain: 'RWD', transmissionType: 'MT', doors: 2, seriesOrigin: 'IMPORT' },
+        { code: '50000001', brand: 'Tesla', name: 'Model 3', classDetail: '長續航版', makeYear: '2023', seats: 5, engineCapacity: 0, fuelType: 'BEV', horsepower: 358, torque: 510, drivetrain: 'AWD', transmissionType: 'SINGLE', doors: 4, seriesOrigin: 'IMPORT' },
+        { code: '50000002', brand: 'BYD', name: 'Atto 3', classDetail: '標準版', makeYear: '2023', seats: 5, engineCapacity: 0, fuelType: 'BEV', horsepower: 201, torque: 310, drivetrain: 'FWD', transmissionType: 'SINGLE', doors: 4, seriesOrigin: 'IMPORT' },
+        { code: '70000001', brand: 'Toyota', name: 'Town Ace', classDetail: '', makeYear: '', seats: 8, engineCapacity: 1500, fuelType: 'GASOLINE', horsepower: null, torque: null, drivetrain: '', transmissionType: '', doors: 4, seriesOrigin: '' },
+        { code: '70000002', brand: 'Mitsubishi', name: 'Delica', classDetail: '', makeYear: '2021', seats: 8, engineCapacity: 2400, fuelType: 'GASOLINE', horsepower: 128, torque: 196, drivetrain: 'AWD', transmissionType: 'AT', doors: 4, seriesOrigin: 'IMPORT' },
+        { code: '99000001', brand: 'Suzuki', name: 'Jimny', classDetail: '', makeYear: '', seats: 4, engineCapacity: 660, fuelType: 'GASOLINE', horsepower: null, torque: null, drivetrain: '', transmissionType: '', doors: 2, seriesOrigin: '' },
+        { code: '99000002', brand: 'Honda', name: 'Fit', classDetail: '', makeYear: '', seats: 5, engineCapacity: 1500, fuelType: 'HEV', horsepower: null, torque: null, drivetrain: 'FWD', transmissionType: 'CVT', doors: 4, seriesOrigin: '' },
+        { code: '99000003', brand: 'Toyota', name: 'Wish', classDetail: '', makeYear: '', seats: 7, engineCapacity: 1800, fuelType: 'GASOLINE', horsepower: null, torque: null, drivetrain: '', transmissionType: '', doors: 4, seriesOrigin: '' },
+        { code: '99000004', brand: 'Mercedes', name: 'Sprinter', classDetail: '', makeYear: '', seats: 9, engineCapacity: 2100, fuelType: 'DIESEL', horsepower: null, torque: null, drivetrain: '', transmissionType: '', doors: 2, seriesOrigin: '' },
+      ];
+      var MAPPING_AUDIT = {
+        '1_10000001': { date: '2026/03/01', user: 'A0001' }, '1_10000002': { date: '2026/03/01', user: 'A0001' },
+        '1_10000003': { date: '2026/03/12', user: 'K1234' }, '1_10000004': { date: '2026/03/12', user: 'K1234' },
+        '1_50000001': { date: '2026/04/02', user: 'K1234' }, '2_20000001': { date: '2026/02/15', user: 'A0001' },
+        '2_20000002': { date: '2026/02/15', user: 'A0001' }, '2_20000003': { date: '2026/03/20', user: 'K1234' },
+        '3_30000001': { date: '2026/01/10', user: 'A0001' }, '3_30000002': { date: '2026/01/10', user: 'A0001' },
+        '4_40000001': { date: '2026/01/20', user: 'A0001' }, '4_40000002': { date: '2026/01/20', user: 'A0001' },
+        '4_40000003': { date: '2026/02/05', user: 'K1234' }, '5_50000001': { date: '2026/04/02', user: 'K1234' },
+        '5_50000002': { date: '2026/04/02', user: 'K1234' }, '7_70000001': { date: '2026/02/28', user: 'A0001' },
+        '7_70000002': { date: '2026/02/28', user: 'A0001' },
+      };
+      var TY = [
+        { id: 1, name: '轎車', visible: true, codes: ['10000001', '10000002', '10000003', '10000004'] },
+        { id: 2, name: '休旅車', visible: true, codes: ['20000001', '20000002', '20000003'] },
+        { id: 3, name: '旅行車', visible: true, codes: ['30000001', '30000002'] },
+        { id: 4, name: '貨車', visible: true, codes: ['40000001', '40000002', '40000003'] },
+        { id: 5, name: '電動車', visible: true, codes: ['50000001', '50000002'] },
+        { id: 6, name: '跑車', visible: false, codes: [] },
+        { id: 7, name: '客貨車', visible: true, codes: ['70000001', '70000002'] },
+      ];
+      var activeId = null, etMode = 'add', etEditId = null, dragId = null, pendRm = null, pendAm = null, smMode = false, smMatchCodes = [], umDraft = {}, expandedRow = null, maintExpandedRow = null, maintFilter = 'all', maintQuery = '';
+      function fm(c) { return AM.find(function (x) { return x.code === c; }) || null; }
+      function ft(id) { return TY.find(function (x) { return x.id === id; }) || null; }
+      function ml(m) { return m ? m.brand + ' ' + m.name : ''; }
+      function typesForCode(c) { return TY.filter(function (t) { return t.codes.indexOf(c) >= 0; }); }
+      
+      function isPending(c) {
+        var m = fm(c);
+        if (!m) return false;
+        var paired = typesForCode(c);
+        return paired.length === 0 || m.confirmed === false;
+      }
+
+      function getUnmatched() {
+        return AM.filter(function (m) {
+          return isPending(m.code);
+        });
+      }
+
+      // Initialize confirmation status for demo
+      AM.forEach(function (m) {
+        var paired = typesForCode(m.code);
+        if (paired.length > 0) {
+          if (m.code === '10000003' || m.code === '20000002') {
+            m.confirmed = false;
+          } else {
+            m.confirmed = true;
+          }
+        } else {
+          m.confirmed = false;
+        }
+      });
+
+      function updBadge() {
+        var badge = document.getElementById('umBadge');
+        if (badge) badge.textContent = getUnmatched().length;
+      }
+      function searchModels(raw) { if (!raw.trim()) return AM.slice(); var terms = raw.split(',').map(function (s) { return s.trim().toLowerCase(); }).filter(Boolean); return AM.filter(function (m) { return terms.every(function (t) { return m.code.toLowerCase().indexOf(t) >= 0 || m.brand.toLowerCase().indexOf(t) >= 0 || m.name.toLowerCase().indexOf(t) >= 0; }); }); }
+      function auditKey(tid, code) { return tid + '_' + code; }
+      function getAudit(tid, code) { return MAPPING_AUDIT[auditKey(tid, code)] || null; }
+      function setAudit(tid, code) { MAPPING_AUDIT[auditKey(tid, code)] = auditNow(); }
+      function delAudit(tid, code) { delete MAPPING_AUDIT[auditKey(tid, code)]; }
+      function auditCell(tid, code) { var a = getAudit(tid, code); if (!a) return '<td class="audit-cell mu">—</td>'; return '<td class="audit-cell"><div class="audit-date">' + a.date + '</div><div class="audit-user">' + a.user + '</div></td>'; }
+      function isComplete(m) { return REQUIRED_FIELDS.every(function (f) { var v = m[f.key]; return v !== null && v !== undefined && v !== ''; }); }
+      function getMissingFields(m) { return REQUIRED_FIELDS.filter(function (f) { var v = m[f.key]; return v === null || v === undefined || v === ''; }); }
+      function statusDot(code) { var m = fm(code); var ok = m ? isComplete(m) : false; var missing = m ? getMissingFields(m) : []; var tip = ok ? '資料完整' : ('缺少：' + missing.map(function (f) { return f.label; }).join('、')); return '<button class="status-dot ' + (ok ? 'complete' : 'incomplete') + '" title="' + tip + '" data-editcode="' + code + '" aria-label="' + tip + '"><i class="ti ' + (ok ? 'ti-check' : 'ti-alert') + '" style="font-size:11px"></i></button>'; }
+      function fuelName(f) { var m = { GASOLINE: '汽油', DIESEL: '柴油', HEV: '油電', PHEV: '插電式油電', BEV: '電動' }; return m[f] || f || '—'; }
+      document.getElementById('gSrchBrand').addEventListener('change', updateGSrchNameOptions);
+      document.getElementById('gBtn').addEventListener('click', doSearch);
+      document.getElementById('gClr').addEventListener('click', clearSearch);
+      document.getElementById('gSrchCode').addEventListener('keydown', function (e) { if (e.key === 'Enter') doSearch(); });
+      function initGSrchOptions() {
+        var brands = {};
+        AM.forEach(function (m) { if (m.brand) brands[m.brand] = true; });
+        var brandList = Object.keys(brands).sort();
+        var brandSel = document.getElementById('gSrchBrand');
+        brandSel.innerHTML = '<option value="">全部</option>' + brandList.map(function (b) { return '<option value="' + b + '">' + b + '</option>'; }).join('');
+        updateGSrchNameOptions();
+      }
+      function updateGSrchNameOptions() {
+        var sBrand = document.getElementById('gSrchBrand').value;
+        var names = {};
+        AM.forEach(function (m) {
+          if (sBrand && m.brand !== sBrand) return;
+          if (m.name) names[m.name] = true;
+        });
+        var nameList = Object.keys(names).sort();
+        var nameSel = document.getElementById('gSrchName');
+        nameSel.innerHTML = '<option value="">全部</option>' + nameList.map(function (n) { return '<option value="' + n + '">' + n + '</option>'; }).join('');
+      }
+      function doSearch() {
+        var sCode = document.getElementById('gSrchCode').value.trim().toLowerCase();
+        var sBrand = document.getElementById('gSrchBrand').value;
+        var sName = document.getElementById('gSrchName').value;
+        var sStatus = document.getElementById('gSrchStatus').value;
+        var results = AM.filter(function (m) {
+          if (sCode && m.code.toLowerCase().indexOf(sCode) < 0) return false;
+          if (sBrand && m.brand !== sBrand) return false;
+          if (sName && m.name !== sName) return false;
+          return true;
+        });
+        if (sStatus === 'incomplete') results = results.filter(function (m) { return !isComplete(m); });
+        else if (sStatus === 'complete') results = results.filter(function (m) { return isComplete(m); });
+
+        smMode = true;
+        smMatchCodes = results.map(function (m) { return m.code; });
+        var relIds = {};
+        results.forEach(function (m) {
+          typesForCode(m.code).forEach(function (t) { relIds[t.id] = true; });
+        });
+        var relIdArr = Object.keys(relIds).map(Number);
+        renderSidebar();
+        applySearchStyle(relIdArr);
+        if (activeId && relIdArr.indexOf(activeId) < 0) { activeId = null; }
+        renderRight();
+      }
+      function applySearchStyle(relIdArr) {
+        document.querySelectorAll('.tc').forEach(function (card) {
+          var rid = parseInt(card.getAttribute('data-id'));
+          card.classList.remove('sdim', 'shl');
+          if (relIdArr.length === 0 || relIdArr.indexOf(rid) < 0) { card.classList.add('sdim'); } else { card.classList.add('shl'); }
+        });
+      }
+      function clearSearch() {
+        smMode = false;
+        smMatchCodes = [];
+        activeId = null;
+        document.getElementById('gSrchCode').value = '';
+        document.getElementById('gSrchBrand').value = '';
+        document.getElementById('gSrchStatus').value = 'all';
+        updateGSrchNameOptions();
+        document.querySelectorAll('.tc').forEach(function (c) { c.classList.remove('sdim', 'shl'); });
+        renderSidebar();
+        renderRight();
+      }
+      function renderSidebar() {
+        var html = '';
+
+        TY.forEach(function (t) {
+          var isAct = t.id === activeId; var canDel = t.codes.length === 0;
+          var cls = 'tc ' + (t.visible ? 'vt' : 'ht') + (isAct ? ' act' : '');
+
+          // Calculate counts
+          var cnt = smMode
+            ? t.codes.filter(function (c) { return smMatchCodes.indexOf(c) >= 0; }).length
+            : t.codes.length;
+          var displayLabel = t.name + ' (' + cnt + ')';
+
+          html += '<div class="' + cls + '" id="card' + t.id + '" data-id="' + t.id + '">';
+          html += '<div class="tc-row1"><i class="ti ti-grip-vertical grip" aria-hidden="true"></i><span class="tc-name">' + displayLabel + '</span>' + (t.visible ? '' : '<span class="hp">隱藏中</span>') + '</div>';
+          html += '<div class="tc-row2"><button class="ib ' + (t.visible ? 'von' : '') + '" data-vis="' + t.id + '"><i class="ti ' + (t.visible ? 'ti-eye' : 'ti-eye-off') + '" style="font-size:13px"></i></button><button class="ib" data-ed="' + t.id + '"><i class="ti ti-pencil" style="font-size:13px"></i></button><button class="ib dng' + (canDel ? '' : ' dis') + '" data-dl="' + t.id + '" title="' + (canDel ? '刪除' : '需先移除所有配對車型') + '"><i class="ti ti-trash" style="font-size:13px"></i></button></div></div>';
+        });
+        document.getElementById('tlist').innerHTML = html;
+
+        if (smMode) {
+          var ri = {};
+          smMatchCodes.forEach(function (c) {
+            typesForCode(c).forEach(function (t) { ri[t.id] = true; });
+          });
+          applySearchStyle(Object.keys(ri).map(Number));
+        }
+
+        document.querySelectorAll('.tc').forEach(function (card) {
+          var rawId = card.getAttribute('data-id');
+          var rid = parseInt(rawId);
+          var grip = card.querySelector('.grip');
+
+          card.addEventListener('click', function (e) {
+            if (e.target.closest('[data-vis],[data-ed],[data-dl]')) return;
+            if (e.target.closest('.grip')) return;
+            activeId = rid;
+            document.querySelectorAll('.tc').forEach(function (c) { c.classList.remove('act'); });
+            card.classList.add('act');
+            renderRight();
+          });
+
+          // Drag-and-drop applies only to normal車種 items
+          if (grip) {
+            grip.addEventListener('mousedown', function () { if (smMode) return; card.setAttribute('draggable', 'true'); });
+            document.addEventListener('mouseup', function () { card.removeAttribute('draggable'); });
+            card.addEventListener('dragstart', function (e) { if (smMode) { e.preventDefault(); return; } dragId = rid; setTimeout(function () { card.classList.add('is-drag'); }, 0); });
+            card.addEventListener('dragover', function (e) { if (smMode) return; e.preventDefault(); document.querySelectorAll('.tc').forEach(function (c) { c.classList.remove('is-drag', 'drag-ov'); }); if (rid !== dragId) card.classList.add('drag-ov'); });
+            card.addEventListener('drop', function (e) { if (smMode) return; e.preventDefault(); if (!dragId || rid === dragId) return; var si = TY.findIndex(function (x) { return x.id === dragId; }); var di = TY.findIndex(function (x) { return x.id === rid; }); if (si < 0 || di < 0) return; var mv = TY.splice(si, 1)[0]; TY.splice(di, 0, mv); renderSidebar(); toast('排序已更新'); });
+            card.addEventListener('dragend', function () { card.removeAttribute('draggable'); document.querySelectorAll('.tc').forEach(function (c) { c.classList.remove('is-drag', 'drag-ov'); }); dragId = null; });
+          }
+
+          var vb = card.querySelector('[data-vis]'); if (vb) vb.addEventListener('click', function (e) { e.stopPropagation(); toggleVis(rid); });
+          var eb = card.querySelector('[data-ed]'); if (eb) eb.addEventListener('click', function (e) { e.stopPropagation(); openEt('edit', rid); });
+          var db = card.querySelector('[data-dl]'); if (db) db.addEventListener('click', function (e) { e.stopPropagation(); openDt(rid); });
+        });
+      }
+      function toggleVis(id) {
+        var t = ft(id); t.visible = !t.visible; renderSidebar(); if (smMode) doSearch(); if (activeId === id) renderRight(); toast('「' + t.name + '」' + (t.visible ? '已顯示' : '已隱藏') + '於車輛選單');
+      }
+      function renderRight() {
+        var t = ft(activeId);
+        if (!t) {
+          document.getElementById('rtitle').textContent = '請選擇車種';
+          document.getElementById('rsub').textContent = smMode ? '點選左側高亮車種以查看配對車型' : '點選左側車種以查看配對車型';
+          document.getElementById('rbody').innerHTML = '<div class="nosel"><i class="ti ti-table" aria-hidden="true"></i><p>選擇左側車種以查看配對車型</p></div>';
+          return;
+        }
+
+        var hlCodes = {}; if (smMode) smMatchCodes.forEach(function (c) { hlCodes[c] = true; });
+        document.getElementById('rtitle').textContent = t.name + (t.visible ? '' : ' （隱藏中）');
+
+        var activeCodes = t.codes;
+        if (smMode) {
+          activeCodes = t.codes.filter(function (c) { return hlCodes[c]; });
+        }
+        document.getElementById('rsub').textContent = '共 ' + t.codes.length + ' 個車型已配對' + (smMode && smMatchCodes.length ? ' ／ 符合搜尋 ' + activeCodes.length + ' 筆' : '');
+
+        if (!activeCodes.length) {
+          var emptyMsg = smMode ? '無符合篩選條件之車型' : '尚無配對車型，可由上方「未配對車型設定」進行配對';
+          document.getElementById('rbody').innerHTML = '<div class="nosel"><i class="ti ti-table" aria-hidden="true"></i><p>' + emptyMsg + '</p></div>';
+          return;
+        }
+
+        var rows = '';
+        var sortedCodes = activeCodes.slice().sort(function (a, b) {
+          var ma = fm(a), mb = fm(b);
+          var ba = ma ? ma.brand : '', bb = mb ? mb.brand : '';
+          return ba.localeCompare(bb, 'zh-Hant');
+        });
+
+        sortedCodes.forEach(function (code) {
+          var m = fm(code); var hl = smMode && hlCodes[code];
+          var pending = isPending(code);
+          rows += '<tr class="' + (hl ? 'srch-hl' : '') + '" data-code="' + code + '"' + (pending ? ' style="background:rgba(217,119,6,0.02);"' : '') + '>';
+          rows += '<td class="c">' + statusDot(code) + '</td>';
+          var pendingTag = pending ? '<span style="margin-left:6px; font-size:9px; background:#FEF3C7; color:#D97706; padding:1px 4px; border-radius:3px; font-weight:600; border:0.5px solid #FCD34D; display:inline-block; line-height:1;">待確認</span>' : '';
+          rows += '<td><span class="cc">' + code + '</span>' + pendingTag + '</td>';
+          rows += '<td class="mu">' + (m ? m.brand : '-') + '</td>';
+          rows += '<td>' + (m ? m.name : '-') + '</td>';
+          rows += '<td class="mu">' + (m ? m.classDetail || '—' : '-') + '</td>';
+          rows += '<td class="mu">' + (m && m.makeYear ? m.makeYear + ' 年' : '—') + '</td>';
+          rows += '<td class="mu">' + (m && m.engineCapacity != null ? m.engineCapacity + ' cc' : '—') + '</td>';
+          rows += '<td class="mu">' + (m ? fuelName(m.fuelType) : '—') + '</td>';
+          rows += auditCell(t.id, code);
+          rows += '<td class="c"><button class="ib dng" data-rm="' + code + '" aria-label="解除配對"><i class="ti ti-x" style="font-size:12px; color:#DC2626;"></i></button></td>';
+          rows += '</tr>';
+        });
+
+        document.getElementById('rbody').innerHTML = '<table class="tbl"><thead><tr><th class="c" style="width:32px;"></th><th>車型代碼</th><th>廠牌</th><th>車型</th><th>車型明細</th><th>出廠年份</th><th>排氣量</th><th>能源種類</th><th>異動時間／異動者</th><th class="c">解除配對</th></tr></thead><tbody>' + rows + '</tbody></table>';
+
+        bindRightEvents(t.id);
+      }
+      function bindRightEvents(tid) {
+        document.querySelectorAll('.status-dot').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var code = this.getAttribute('data-editcode');
+            openEditDrawer(code);
+          });
+        });
+        document.querySelectorAll('[data-rm]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            openRm(this.getAttribute('data-rm'));
+          });
+        });
+      }
+      document.getElementById('addTypeBtn').addEventListener('click', function () { openEt('add', null); });
+      document.getElementById('etCx').addEventListener('click', function () { document.getElementById('etMo').style.display = 'none'; });
+      document.getElementById('etMo').addEventListener('click', function (e) { if (e.target === this) this.style.display = 'none'; });
+      document.getElementById('etSv').addEventListener('click', saveEt);
+      document.getElementById('etIn').addEventListener('keydown', function (e) { if (e.key === 'Enter') saveEt(); });
+      document.getElementById('etIn').addEventListener('input', function () { valEt(false); });
+      function openEt(mode, id) { etMode = mode; etEditId = id; document.getElementById('etTi').textContent = mode === 'add' ? '新增車種' : '編輯車種'; document.getElementById('etIn').value = mode === 'edit' ? ft(id).name : ''; document.getElementById('etIn').classList.remove('err'); document.getElementById('etEr').textContent = ''; document.getElementById('etMo').style.display = 'flex'; setTimeout(function () { document.getElementById('etIn').focus(); }, 50); }
+      function valEt(sub) { var v = document.getElementById('etIn').value.trim(); var er = document.getElementById('etEr'); var ip = document.getElementById('etIn'); er.textContent = ''; ip.classList.remove('err'); if (sub && v.length < 2) { er.textContent = '名稱至少需要 2 個字'; ip.classList.add('err'); return false; } if (v.length > 8) { er.textContent = '名稱最多 8 個字'; ip.classList.add('err'); return false; } if (sub) { var dup = TY.find(function (t) { return t.name === v && t.id !== etEditId; }); if (dup) { er.textContent = '「' + v + '」已存在'; ip.classList.add('err'); return false; } } return true; }
+      function saveEt() { if (!valEt(true)) return; var v = document.getElementById('etIn').value.trim(); if (etMode === 'add') { TY.push({ id: Date.now(), name: v, visible: true, codes: [] }); toast('「' + v + '」已新增'); } else { ft(etEditId).name = v; toast('已更新為「' + v + '」'); } document.getElementById('etMo').style.display = 'none'; renderSidebar(); if (smMode) doSearch(); if (activeId === etEditId) renderRight(); }
+      function openDt(id) { var t = ft(id); var ok = t.codes.length === 0; document.getElementById('dtTi').textContent = '刪除車種「' + t.name + '」'; document.getElementById('dtBo').textContent = ok ? '確定要刪除「' + t.name + '」？此操作無法復原。' : '「' + t.name + '」目前有 ' + t.codes.length + ' 個車型正在配對中，無法刪除。'; var wn = document.getElementById('dtWn'); wn.style.display = ok ? 'none' : 'block'; if (!ok) wn.textContent = '請先移除所有已配對的車型，再執行刪除。'; var ft2 = document.getElementById('dtFt'); ft2.innerHTML = ok ? '<button class="btn" id="dtCx">取消</button><button class="btn btn-d" id="dtCf">確定刪除</button>' : '<button class="btn btn-p" id="dtCx">我知道了</button>'; document.getElementById('dtCx').addEventListener('click', function () { document.getElementById('dtMo').style.display = 'none'; }); if (ok) document.getElementById('dtCf').addEventListener('click', function () { TY = TY.filter(function (x) { return x.id !== id; }); if (activeId === id) activeId = null; document.getElementById('dtMo').style.display = 'none'; renderSidebar(); if (smMode) doSearch(); renderRight(); updBadge(); toast('「' + t.name + '」已刪除'); }); document.getElementById('dtMo').style.display = 'flex'; }
+      document.getElementById('dtMo').addEventListener('click', function (e) { if (e.target === this) this.style.display = 'none'; });
+      document.getElementById('amCx').addEventListener('click', function () { document.getElementById('amMo').style.display = 'none'; });
+      document.getElementById('amMo').addEventListener('click', function (e) { if (e.target === this) this.style.display = 'none'; });
+      document.getElementById('amBack').addEventListener('click', function () { pendAm = null; showAmStep(1); });
+      document.getElementById('amCf').addEventListener('click', doAm);
+      document.getElementById('amSrchBrand').addEventListener('change', function () { updateAmNameOptions(); });
+      document.getElementById('amQueryBtn').addEventListener('click', function () {
+        renderAmDd();
+        pendAm = null;
+        document.getElementById('amCf').style.display = 'none';
+        document.getElementById('amEr').textContent = '';
+      });
+      document.getElementById('amResetBtn').addEventListener('click', function () {
+        document.getElementById('amSrchCode').value = '';
+        document.getElementById('amSrchBrand').value = '';
+        updateAmNameOptions();
+        renderAmDd();
+        pendAm = null;
+        document.getElementById('amCf').style.display = 'none';
+        document.getElementById('amEr').textContent = '';
+      });
+      function initAmSrchOptions() {
+        var brands = {};
+        AM.forEach(function (m) { if (m.brand) brands[m.brand] = true; });
+        var brandList = Object.keys(brands).sort();
+        var brandSel = document.getElementById('amSrchBrand');
+        brandSel.innerHTML = '<option value="">全部</option>' + brandList.map(function (b) { return '<option value="' + b + '">' + b + '</option>'; }).join('');
+        updateAmNameOptions();
+      }
+      function updateAmNameOptions() {
+        var sBrand = document.getElementById('amSrchBrand').value;
+        var names = {};
+        AM.forEach(function (m) {
+          if (sBrand && m.brand !== sBrand) return;
+          if (m.name) names[m.name] = true;
+        });
+        var nameList = Object.keys(names).sort();
+        var nameSel = document.getElementById('amSrchName');
+        nameSel.innerHTML = '<option value="">全部</option>' + nameList.map(function (n) { return '<option value="' + n + '">' + n + '</option>'; }).join('');
+      }
+      function openAm() { pendAm = null; document.getElementById('amSrchCode').value = ''; initAmSrchOptions(); document.getElementById('amEr').textContent = ''; showAmStep(1); renderAmDd(); document.getElementById('amMo').style.display = 'flex'; setTimeout(function () { document.getElementById('amSrchCode').focus(); }, 50); }
+      function showAmStep(n) { document.getElementById('amStep1').style.display = n === 1 ? 'flex' : 'none'; document.getElementById('amStep2').style.display = n === 2 ? 'flex' : 'none'; document.getElementById('amBack').style.display = n === 2 ? 'inline-flex' : 'none'; document.getElementById('amCf').style.display = n === 2 ? 'inline-flex' : 'none'; }
+      function renderAmDd() {
+        var t = ft(activeId);
+        var sCode = document.getElementById('amSrchCode').value.trim().toLowerCase();
+        var sBrand = document.getElementById('amSrchBrand').value;
+        var sName = document.getElementById('amSrchName').value;
+        var items = AM.filter(function (m) {
+          if (sCode && m.code.toLowerCase().indexOf(sCode) < 0) return false;
+          if (sBrand && m.brand !== sBrand) return false;
+          if (sName && m.name !== sName) return false;
+          return true;
+        });
+        items.sort(function (a, b) { return a.brand.localeCompare(b.brand, 'zh-Hant'); });
+        if (!items.length) { document.getElementById('amDd').innerHTML = '<div class="ddempty">無符合結果</div>'; return; }
+        document.getElementById('amDd').innerHTML = items.map(function (m) { var inThis = t && t.codes.indexOf(m.code) >= 0; var matchedTypes = typesForCode(m.code); var note = matchedTypes.length > 0 ? '已配對：' + matchedTypes.map(function (x) { return x.name; }).join('、') : '未配對'; return '<div class="ddi' + (inThis ? ' tk' : '') + '" data-code="' + m.code + '"><span class="ddc">' + m.code + '</span><span class="ddn">' + m.brand + ' ' + m.name + ' <span class="dde">（' + note + '）</span></span></div>'; }).join('');
+        document.querySelectorAll('#amDd .ddi').forEach(function (el) {
+          el.addEventListener('click', function () {
+            var code = this.getAttribute('data-code');
+            document.getElementById('amMo').style.display = 'none';
+            openEditDrawer(code, true);
+          });
+        });
+      }
+      function showAmTypeChecks(code) {
+        var m = fm(code);
+        var r1 = '<div style="display:flex;align-items:center;gap:6px;"><span style="font-size:10px;color:var(--color-text-tertiary);font-weight:600;">車型代碼</span><span class="cc" style="font-size:10px;font-weight:600;color:var(--color-text-primary);padding:1px 5px;">' + code + '</span></div>';
+        var brandNameDetail = m.brand + ' ' + m.name + (m.classDetail ? ' ' + m.classDetail : '');
+        var r2 = '<div style="font-size:13px;font-weight:600;color:var(--color-text-primary);">' + brandNameDetail + '</div>';
+        var specs = '出廠年份：' + (m.makeYear ? m.makeYear + ' 年' : '—') + ' │ 排氣量：' + (m.engineCapacity != null ? m.engineCapacity + ' cc' : '—') + ' │ 能源種類：' + fuelName(m.fuelType);
+        var r3 = '<div style="font-size:11px;color:var(--color-text-secondary);">' + specs + '</div>';
+        document.getElementById('amModelInfo').innerHTML = r1 + r2 + r3;
+        document.getElementById('amTypeChecks').innerHTML = TY.map(function (ty) {
+          var already = ty.codes.indexOf(code) >= 0;
+          var checked = already || ty.id === activeId;
+          var hidNote = !ty.visible ? '<span class="tc-hid">隱藏中</span>' : '';
+          return '<label class="tc-item" for="amtc' + ty.id + '"><input type="checkbox" id="amtc' + ty.id + '" value="' + ty.id + '"' + (checked ? ' checked' : '') + '><span class="tc-label">' + ty.name + hidNote + (already ? ' <span style="font-size:10px;color:#2563EB">（已配對）</span>' : '') + '</span></label>';
+        }).join('');
+        document.getElementById('amHint').textContent = '已勾選的車種將加入此車型配對，取消勾選可移除配對';
+      }
+      function doAm() {
+        if (!pendAm) return;
+        var checks = document.querySelectorAll('#amTypeChecks input[type=checkbox]');
+        var oldT = typesForCode(pendAm).map(function (t) { return t.id; });
+        var newT = [];
+        checks.forEach(function (cb) {
+          if (cb.checked) newT.push(parseInt(cb.value));
+        });
+        var added = 0, removed = 0;
+        TY.forEach(function (t) {
+          var wasPaired = oldT.indexOf(t.id) >= 0;
+          var nowPaired = newT.indexOf(t.id) >= 0;
+          if (wasPaired && !nowPaired) {
+            t.codes = t.codes.filter(function (c) { return c !== pendAm; });
+            delAudit(t.id, pendAm);
+            removed++;
+          }
+          if (!wasPaired && nowPaired) {
+            t.codes.push(pendAm);
+            setAudit(t.id, pendAm);
+            added++;
+          }
+        });
+        var msg = '「' + ml(fm(pendAm)) + '」配對已更新';
+        if (added > 0 && removed > 0) msg = '「' + ml(fm(pendAm)) + '」新增配對 ' + added + ' 個、移除 ' + removed + ' 個車種';
+        else if (added > 0) msg = '「' + ml(fm(pendAm)) + '」已加入 ' + added + ' 個車種';
+        else if (removed > 0) msg = '「' + ml(fm(pendAm)) + '」已從 ' + removed + ' 個車種中移除';
+
+        toast(msg);
+        document.getElementById('amMo').style.display = 'none';
+        updBadge();
+        renderSidebar();
+        if (smMode) doSearch();
+        renderRight();
+      }
+      function openRm(code) { pendRm = code; var m = fm(code); var t = ft(activeId); document.getElementById('rmBo').textContent = '確定移除「' + ml(m) + '」在「' + t.name + '」的配對？'; document.getElementById('rmMo').style.display = 'flex'; }
+      document.getElementById('rmCx').addEventListener('click', function () { document.getElementById('rmMo').style.display = 'none'; });
+      document.getElementById('rmMo').addEventListener('click', function (e) { if (e.target === this) this.style.display = 'none'; });
+      document.getElementById('rmCf').addEventListener('click', function () { if (!pendRm) return; var t = ft(activeId); var m = fm(pendRm); t.codes = t.codes.filter(function (c) { return c !== pendRm; }); delAudit(t.id, pendRm); toast('「' + ml(m) + '」已從「' + t.name + '」移除'); document.getElementById('rmMo').style.display = 'none'; pendRm = null; updBadge(); renderSidebar(); if (smMode) doSearch(); renderRight(); });
+      // Side Drawer state and functions
+      var currentEditingCode = null;
+      var peidDraft = {};
+
+      function openEditDrawer(code, preselectActive) {
+        var m = fm(code);
+        if (!m) return;
+        currentEditingCode = code;
+
+        var brandNameDetail = m.brand + ' ' + m.name + (m.classDetail ? ' ' + m.classDetail : '');
+        var specs = '出廠年份：' + (m.makeYear ? m.makeYear + ' 年' : '—') + ' │ 排氣量：' + (m.engineCapacity != null ? m.engineCapacity + ' cc' : '—') + ' │ 能源種類：' + fuelName(m.fuelType);
+        var codeInfo = '車型代碼：' + code;
+
+        document.getElementById('drawerTitle').textContent = '編輯車型資料';
+
+        var missingKeys = getMissingFields(m).map(function (f) { return f.key; });
+        function cls(k) { return missingKeys.indexOf(k) >= 0 ? ' missing' : ''; }
+
+        var pairedOptions = TY.map(function(t) {
+          var paired = typesForCode(m.code).map(function(x){return x.id;});
+          var selectedId = (preselectActive && typeof activeId === 'number') ? activeId : (paired.length ? paired[0] : null);
+          var isSel = (t.id === selectedId) ? ' selected' : '';
+          var hidNote = !t.visible ? ' (隱藏中)' : '';
+          return '<option value="' + t.id + '"' + isSel + '>' + t.name + hidNote + '</option>';
+        }).join('');
+
+        var bodyHtml =
+          '<div class="drawer-section" style="padding-bottom:14px; border-bottom:0.5px solid var(--color-border-secondary); margin-bottom:14px;">' +
+          '  <div style="font-size:16px; font-weight:700; color:var(--color-text-primary); margin-bottom:6px;">' + brandNameDetail + '</div>' +
+          '  <div style="font-size:12px; color:var(--color-text-secondary); margin-bottom:6px;">' + specs + '</div>' +
+          '  <div style="font-size:12px; color:var(--color-text-secondary);">' + codeInfo + '</div>' +
+          '</div>' +
+          '<div class="drawer-form">' +
+          '  <div class="edit-field"><label>車門數</label><input type="number" class="ef' + cls('doors') + '" data-field="doors" value="' + (m.doors || '') + '" placeholder="2/4/5"></div>' +
+          '  <div class="edit-field"><label>座位數 <span class="lbl-hint src">(CRS來源)</span></label><input type="number" class="ef' + cls('seats') + '" data-field="seats" value="' + (m.seats || '') + '" placeholder="5"></div>' +
+          '  <div class="edit-field">' +
+          '    <label>產地</label>' +
+          '    <select class="ef' + cls('seriesOrigin') + '" data-field="seriesOrigin">' +
+          '      <option value="">— 選擇 —</option>' +
+          '      <option value="DOMESTIC"' + (m.seriesOrigin === 'DOMESTIC' ? ' selected' : '') + '>國產 (DOMESTIC)</option>' +
+          '      <option value="IMPORT"' + (m.seriesOrigin === 'IMPORT' ? ' selected' : '') + '>進口 (IMPORT)</option>' +
+          '    </select>' +
+          '  </div>' +
+          '  <div class="edit-field">' +
+          '    <label>變速箱</label>' +
+          '    <select class="ef' + cls('transmissionType') + '" data-field="transmissionType">' +
+          '      <option value="">— 選擇 —</option>' +
+          '      <option value="AT"' + (m.transmissionType === 'AT' ? ' selected' : '') + '>自排 (AT)</option>' +
+          '      <option value="MT"' + (m.transmissionType === 'MT' ? ' selected' : '') + '>手排 (MT)</option>' +
+          '      <option value="AMT"' + (m.transmissionType === 'AMT' ? ' selected' : '') + '>手自排 (AMT)</option>' +
+          '      <option value="CVT"' + (m.transmissionType === 'CVT' ? ' selected' : '') + '>無段變速 (CVT)</option>' +
+          '      <option value="SINGLE"' + (m.transmissionType === 'SINGLE' ? ' selected' : '') + '>單速（電動車） (SINGLE)</option>' +
+          '    </select>' +
+          '  </div>' +
+          '  <div class="edit-field">' +
+          '    <label>傳動方式</label>' +
+          '    <select class="ef' + cls('drivetrain') + '" data-field="drivetrain">' +
+          '      <option value="">— 選擇 —</option>' +
+          '      <option value="FWD"' + (m.drivetrain === 'FWD' ? ' selected' : '') + '>前輪驅動 (FWD)</option>' +
+          '      <option value="RWD"' + (m.drivetrain === 'RWD' ? ' selected' : '') + '>後輪驅動 (RWD)</option>' +
+          '      <option value="AWD"' + (m.drivetrain === 'AWD' ? ' selected' : '') + '>全時四驅 (AWD)</option>' +
+          '      <option value="4WD"' + (m.drivetrain === '4WD' ? ' selected' : '') + '>分時四驅 (4WD)</option>' +
+          '    </select>' +
+          '  </div>' +
+          '  <div class="edit-field" style="grid-column: span 2;">' +
+          '    <label>指定車種（單選）</label>' +
+          '    <select class="ef" id="drawer-paired-type" style="width:100%; padding:5px 7px; font-size:12px; border:0.5px solid var(--color-border-secondary); border-radius:var(--border-radius-md); background:var(--color-background-primary); color:var(--color-text-primary); outline:none; cursor:pointer;">' +
+          '      <option value="">— 選擇車種 —</option>' + pairedOptions +
+          '    </select>' +
+          '  </div>' +
+          '</div>';
+
+        document.getElementById('drawerBody').innerHTML = bodyHtml;
+        document.getElementById('drawerOverlay').classList.add('open');
+        document.getElementById('sideDrawer').classList.add('open');
+      }
+
+      function closeEditDrawer() {
+        document.getElementById('drawerOverlay').classList.remove('open');
+        document.getElementById('sideDrawer').classList.remove('open');
+        currentEditingCode = null;
+      }
+
+      // Bind Side Drawer Footer Buttons
+      document.getElementById('drawerClose').addEventListener('click', closeEditDrawer);
+      document.getElementById('drawerCancel').addEventListener('click', closeEditDrawer);
+      document.getElementById('drawerOverlay').addEventListener('click', closeEditDrawer);
+      document.getElementById('drawerSave').addEventListener('click', function () {
+        if (!currentEditingCode) return;
+        var m = fm(currentEditingCode);
+        if (!m) return;
+
+        var pairedSelect = document.getElementById('drawer-paired-type');
+        if (pairedSelect) {
+          var val = pairedSelect.value;
+          peidDraft[currentEditingCode] = val ? [parseInt(val)] : [];
+        }
+
+        var drawer = document.getElementById('sideDrawer');
+        drawer.querySelectorAll('.ef').forEach(function (inp) {
+          var field = inp.getAttribute('data-field');
+          if (!field) return;
+          var val = inp.value.trim();
+          if (inp.type === 'number') {
+            m[field] = val === '' ? null : parseFloat(val);
+          } else {
+            m[field] = val;
+          }
+        });
+
+        if (peidDraft[currentEditingCode]) {
+          var oldT = typesForCode(currentEditingCode).map(function (t) { return t.id; });
+          var newT = peidDraft[currentEditingCode];
+          TY.forEach(function (t) {
+            var wasPaired = oldT.indexOf(t.id) >= 0;
+            var nowPaired = newT.indexOf(t.id) >= 0;
+            if (wasPaired && !nowPaired) {
+              t.codes = t.codes.filter(function (c) { return c !== currentEditingCode; });
+              delAudit(t.id, currentEditingCode);
+            }
+            if (!wasPaired && nowPaired) {
+              t.codes.push(currentEditingCode);
+              setAudit(t.id, currentEditingCode);
+            }
+          });
+          m.confirmed = newT.length > 0;
+        } else {
+          if (typesForCode(currentEditingCode).length > 0) {
+            m.confirmed = true;
+          }
+        }
+
+        if (typeof activeId === 'number') {
+          setAudit(activeId, currentEditingCode);
+        }
+
+        closeEditDrawer();
+        toast('「' + m.brand + ' ' + m.name + '」資料與配對已儲存');
+
+        updBadge();
+        renderSidebar();
+        if (smMode) doSearch();
+        renderRight();
+
+        if (document.getElementById('umMo').style.display === 'flex') {
+          var unmatchedList = getUnmatched();
+          unmatchedList.forEach(function (m) {
+            if (!umDraft[m.code]) {
+              umDraft[m.code] = typesForCode(m.code).map(function (t) { return t.id; });
+            }
+          });
+          renderUmTable();
+        }
+
+        if (typeof renderMaintTable === 'function') {
+          renderMaintTable();
+        }
+      });
+
+      // Custom multiple select dropdown in Side Drawer (with search capability)
+      function initDrawerPeidMcSelect(code, preselectActive) {
+        var wrap = document.getElementById('drawer-peid-mc');
+        if (!wrap) return;
+        peidDraft[code] = typesForCode(code).map(function (t) { return t.id; });
+        if (preselectActive && typeof activeId === 'number' && peidDraft[code].indexOf(activeId) < 0) {
+          peidDraft[code].push(activeId);
+        }
+
+        var filterText = "";
+
+        function render() {
+          var sel = peidDraft[code];
+          var chipsHtml = sel.length ? sel.map(function (tid) {
+            var t = ft(tid);
+            return t ? '<span class="mc-chip">' + t.name + '<span class="rx" data-tid="' + tid + '">×</span></span>' : '';
+          }).join('') : '<span class="mc-ph">選擇車種...</span>';
+
+          var filteredTY = TY.filter(function (t) {
+            return !filterText || t.name.toLowerCase().indexOf(filterText.toLowerCase()) >= 0;
+          });
+
+          var optionsHtml = filteredTY.map(function (t) {
+            var checked = sel.indexOf(t.id) >= 0;
+            return '<div class="mc-opt" data-tid="' + t.id + '"><input type="checkbox" ' + (checked ? 'checked' : '') + ' onclick="event.preventDefault()">' + t.name + (!t.visible ? '<span class="hid-tag">隱藏中</span>' : '') + '</div>';
+          }).join('');
+
+          if (optionsHtml === "") {
+            optionsHtml = '<div style="padding: 8px; font-size:11px; text-align:center; color:var(--color-text-tertiary);">無符合車種</div>';
+          }
+
+          wrap.innerHTML =
+            '<div class="mc-display" tabindex="0">' + chipsHtml + '</div>' +
+            '<div class="mc-dd" id="drawer-peid-mcdd">' +
+            '  <div class="mc-search-box">' +
+            '    <i class="ti ti-search" style="font-size:12px; color:var(--color-text-tertiary); margin-right:4px;"></i>' +
+            '    <input type="text" placeholder="搜尋車種..." class="mc-search-input" value="' + filterText + '" style="border:none; outline:none; background:transparent; font-size:11px; width:100%; color:var(--color-text-primary);">' +
+            '  </div>' +
+            '  <div class="mc-opts-list" style="max-height: 160px; overflow-y: auto;">' + optionsHtml + '</div>' +
+            '</div>';
+
+          var searchInput = wrap.querySelector('.mc-search-input');
+          searchInput.addEventListener('input', function (e) {
+            filterText = e.target.value;
+            var optsList = wrap.querySelector('.mc-opts-list');
+            var selInner = peidDraft[code];
+            var filtered = TY.filter(function (t) {
+              return !filterText || t.name.toLowerCase().indexOf(filterText.toLowerCase()) >= 0;
+            });
+            optsList.innerHTML = filtered.map(function (t) {
+              var checked = selInner.indexOf(t.id) >= 0;
+              return '<div class="mc-opt" data-tid="' + t.id + '"><input type="checkbox" ' + (checked ? 'checked' : '') + ' onclick="event.preventDefault()">' + t.name + (!t.visible ? '<span class="hid-tag">隱藏中</span>' : '') + '</div>';
+            }).join('');
+            if (optsList.innerHTML === "") {
+              optsList.innerHTML = '<div style="padding: 8px; font-size:11px; text-align:center; color:var(--color-text-tertiary);">無符合車種</div>';
+            }
+
+            optsList.querySelectorAll('.mc-opt').forEach(function (opt) {
+              opt.addEventListener('click', function (e) {
+                e.stopPropagation();
+                var tid = parseInt(this.getAttribute('data-tid'));
+                var idx = peidDraft[code].indexOf(tid);
+                if (idx >= 0) peidDraft[code].splice(idx, 1); else peidDraft[code].push(tid);
+                render();
+                wrap.querySelector('.mc-dd').classList.add('open');
+                wrap.querySelector('.mc-search-input').focus();
+              });
+            });
+          });
+
+          wrap.querySelector('.mc-display').addEventListener('click', function (e) {
+            if (e.target.classList.contains('rx')) {
+              var tid = parseInt(e.target.getAttribute('data-tid'));
+              peidDraft[code] = peidDraft[code].filter(function (x) { return x !== tid; });
+              render();
+              return;
+            }
+            var dd = wrap.querySelector('.mc-dd');
+            var wasOpen = dd.classList.contains('open');
+            document.querySelectorAll('.mc-dd').forEach(function (d) { d.classList.remove('open'); });
+            if (!wasOpen) {
+              dd.classList.add('open');
+              setTimeout(function () { wrap.querySelector('.mc-search-input').focus(); }, 50);
+            }
+          });
+
+          wrap.querySelectorAll('.mc-opts-list .mc-opt').forEach(function (opt) {
+            opt.addEventListener('click', function (e) {
+              e.stopPropagation();
+              var tid = parseInt(this.getAttribute('data-tid'));
+              var idx = peidDraft[code].indexOf(tid);
+              if (idx >= 0) peidDraft[code].splice(idx, 1); else peidDraft[code].push(tid);
+              render();
+              wrap.querySelector('.mc-dd').classList.add('open');
+              wrap.querySelector('.mc-search-input').focus();
+            });
+          });
+        }
+        render();
+      }
+
+      // Custom multiple select dropdown in unmatched vehicle rows (with search capability & auto-save on toggle)
+      // Modal state for unmatched vehicles
+      var umDraft = {};
+
+      function openUm() {
+        umDraft = {}; // Reset draft
+        var unmatchedList = getUnmatched();
+        unmatchedList.forEach(function (m) {
+          umDraft[m.code] = typesForCode(m.code).map(function (t) { return t.id; });
+        });
+
+        document.getElementById('umMo').style.display = 'flex';
+        renderUmTable();
+      }
+
+      function renderUmTable() {
+        var items = getUnmatched();
+        items.sort(function (a, b) { return a.brand.localeCompare(b.brand, 'zh-Hant'); });
+
+        var tb = document.getElementById('umTb');
+        if (!items.length) {
+          tb.innerHTML = '<tr><td colspan="9" style="text-align:center; padding:24px; color:var(--color-text-tertiary); font-size:12px;">所有車型已完成確認與配對</td></tr>';
+          updUmSt();
+          return;
+        }
+
+        tb.innerHTML = items.map(function (m) {
+          var selType = umDraft[m.code] && umDraft[m.code].length ? umDraft[m.code][0] : '';
+          var optionsHtml = TY.map(function (t) {
+            var selected = (t.id === selType) ? ' selected' : '';
+            var hidNote = !t.visible ? ' (隱藏中)' : '';
+            return '<option value="' + t.id + '"' + selected + '>' + t.name + hidNote + '</option>';
+          }).join('');
+
+          var hasPaired = typesForCode(m.code).length > 0;
+          var pendingBadge = hasPaired ? '<span style="margin-left:6px; font-size:9px; background:#FEF3C7; color:#D97706; padding:1px 4px; border-radius:3px; font-weight:600; border:0.5px solid #FCD34D; display:inline-block; line-height:1;">待確認</span>' : '';
+
+          return '<tr data-code="' + m.code + '">' +
+            '<td class="c">' + statusDot(m.code) + '</td>' +
+            '<td><span class="cc">' + m.code + '</span>' + pendingBadge + '</td>' +
+            '<td style="font-size:11px; color:var(--color-text-secondary);">' + m.brand + '</td>' +
+            '<td style="font-size:11px; font-weight:600;">' + m.name + '</td>' +
+            '<td style="font-size:11px; color:var(--color-text-secondary);">' + (m.classDetail || '—') + '</td>' +
+            '<td style="font-size:11px; color:var(--color-text-secondary);">' + (m && m.makeYear ? m.makeYear + ' 年' : '—') + '</td>' +
+            '<td style="font-size:11px; color:var(--color-text-secondary);">' + (m && m.engineCapacity != null ? m.engineCapacity + ' cc' : '—') + '</td>' +
+            '<td style="font-size:11px; color:var(--color-text-secondary);">' + (m ? fuelName(m.fuelType) : '—') + '</td>' +
+            '<td>' +
+            '  <select class="fi um-select" data-code="' + m.code + '" style="font-size:11px; height:28px; padding:3px 8px; border:0.5px solid var(--color-border-secondary); border-radius:var(--border-radius-md); background:var(--color-background-primary); color:var(--color-text-primary); outline:none; cursor:pointer; width:100%;">' +
+            '    <option value="">— 選擇車種 —</option>' + optionsHtml +
+            '  </select>' +
+            '</td>' +
+            '</tr>';
+        }).join('');
+
+        tb.querySelectorAll('.um-select').forEach(function (select) {
+          select.addEventListener('change', function () {
+            var code = this.getAttribute('data-code');
+            var val = this.value;
+            umDraft[code] = val ? [parseInt(val)] : [];
+            updUmSt();
+          });
+        });
+
+        tb.querySelectorAll('.status-dot').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var code = this.getAttribute('data-editcode');
+            openEditDrawer(code);
+          });
+        });
+
+        updUmSt();
+      }
+
+      function updUmSt() {
+        var unmatchedList = getUnmatched();
+        var tot = unmatchedList.length;
+
+        var changedCount = 0;
+        var pendingConfirmCount = 0;
+
+        unmatchedList.forEach(function (m) {
+          if (typesForCode(m.code).length > 0) {
+            pendingConfirmCount++;
+          }
+        });
+
+        Object.keys(umDraft).forEach(function (code) {
+          var currentIds = typesForCode(code).map(function (t) { return t.id; });
+          var draftIds = umDraft[code] || [];
+          if (currentIds.sort().join(',') !== draftIds.sort().join(',')) {
+            changedCount++;
+          }
+        });
+
+        var isSvVisible = changedCount > 0 || pendingConfirmCount > 0;
+
+        document.getElementById('umSt').innerHTML =
+          '共 <b style="color:#D97706">' + tot + '</b> 筆待處理（未配對: ' + (tot - pendingConfirmCount) + '，待審查: ' + pendingConfirmCount + '）' +
+          (changedCount > 0 ? '，已變更 <b>' + changedCount + '</b> 筆設定' : '');
+
+        var saveBtn = document.getElementById('umSv');
+        saveBtn.style.display = isSvVisible ? 'inline-flex' : 'none';
+        saveBtn.innerHTML = changedCount > 0 
+          ? '<i class="ti ti-check" style="font-size:12px"></i> 儲存變更' 
+          : '<i class="ti ti-check" style="font-size:12px"></i> 批次審查確認';
+      }
+
+      function saveUm() {
+        var saved = 0;
+        var confirmedCount = 0;
+
+        Object.keys(umDraft).forEach(function (code) {
+          var currentIds = typesForCode(code).map(function (t) { return t.id; });
+          var draftIds = umDraft[code] || [];
+          var m = fm(code);
+
+          if (m) {
+            if (draftIds.length > 0) {
+              if (m.confirmed === false) {
+                m.confirmed = true;
+                confirmedCount++;
+              }
+            } else {
+              m.confirmed = false;
+            }
+          }
+
+          if (currentIds.sort().join(',') !== draftIds.sort().join(',')) {
+            TY.forEach(function (t) {
+              var wasPaired = currentIds.indexOf(t.id) >= 0;
+              var nowPaired = draftIds.indexOf(t.id) >= 0;
+              if (wasPaired && !nowPaired) {
+                t.codes = t.codes.filter(function (c) { return c !== code; });
+                delAudit(t.id, code);
+              }
+              if (!wasPaired && nowPaired) {
+                t.codes.push(code);
+                setAudit(t.id, code);
+              }
+            });
+            saved++;
+          }
+        });
+
+        umDraft = {};
+        document.getElementById('umMo').style.display = 'none';
+
+        var msg = '';
+        if (saved > 0 && confirmedCount > 0) {
+          msg = '已更新 ' + saved + ' 筆配對，並審核確認 ' + confirmedCount + ' 筆資料';
+        } else if (saved > 0) {
+          msg = '已更新 ' + saved + ' 筆配對設定';
+        } else if (confirmedCount > 0) {
+          msg = '已批次審核確認 ' + confirmedCount + ' 筆外部配對資料';
+        } else {
+          msg = '配對設定已儲存';
+        }
+        toast(msg);
+
+        updBadge();
+        renderSidebar();
+        if (smMode) doSearch();
+        renderRight();
+
+        if (typeof renderMaintTable === 'function') {
+          renderMaintTable();
+        }
+      }
+
+      function initMcSelect(code) {
+        var wrap = document.getElementById('mc-' + code);
+        if (!wrap) return;
+        if (!umDraft[code]) {
+          umDraft[code] = typesForCode(code).map(function (t) { return t.id; });
+        }
+
+        var filterText = "";
+
+        function render() {
+          var sel = umDraft[code];
+          var chipsHtml = sel.length ? sel.map(function (tid) {
+            var t = ft(tid);
+            return t ? '<span class="mc-chip">' + t.name + '<span class="rx" data-tid="' + tid + '">×</span></span>' : '';
+          }).join('') : '<span class="mc-ph">選擇車種...</span>';
+
+          var filteredTY = TY.filter(function (t) {
+            return !filterText || t.name.toLowerCase().indexOf(filterText.toLowerCase()) >= 0;
+          });
+
+          var optionsHtml = filteredTY.map(function (t) {
+            var checked = sel.indexOf(t.id) >= 0;
+            return '<div class="mc-opt" data-tid="' + t.id + '"><input type="checkbox" ' + (checked ? 'checked' : '') + ' onclick="event.preventDefault()">' + t.name + (!t.visible ? '<span class="hid-tag">隱藏中</span>' : '') + '</div>';
+          }).join('');
+
+          if (optionsHtml === "") {
+            optionsHtml = '<div style="padding: 8px; font-size:11px; text-align:center; color:var(--color-text-tertiary);">無符合車種</div>';
+          }
+
+          wrap.innerHTML =
+            '<div class="mc-display" tabindex="0">' + chipsHtml + '</div>' +
+            '<div class="mc-dd" id="mcdd-' + code + '">' +
+            '  <div class="mc-search-box">' +
+            '    <i class="ti ti-search" style="font-size:12px; color:var(--color-text-tertiary); margin-right:4px;"></i>' +
+            '    <input type="text" placeholder="搜尋車種..." class="mc-search-input" value="' + filterText + '" style="border:none; outline:none; background:transparent; font-size:11px; width:100%; color:var(--color-text-primary);">' +
+            '  </div>' +
+            '  <div class="mc-opts-list" style="max-height: 160px; overflow-y: auto;">' + optionsHtml + '</div>' +
+            '</div>';
+
+          var searchInput = wrap.querySelector('.mc-search-input');
+          searchInput.addEventListener('input', function (e) {
+            filterText = e.target.value;
+            var optsList = wrap.querySelector('.mc-opts-list');
+            var selInner = umDraft[code];
+            var filtered = TY.filter(function (t) {
+              return !filterText || t.name.toLowerCase().indexOf(filterText.toLowerCase()) >= 0;
+            });
+            optsList.innerHTML = filtered.map(function (t) {
+              var checked = selInner.indexOf(t.id) >= 0;
+              return '<div class="mc-opt" data-tid="' + t.id + '"><input type="checkbox" ' + (checked ? 'checked' : '') + ' onclick="event.preventDefault()">' + t.name + (!t.visible ? '<span class="hid-tag">隱藏中</span>' : '') + '</div>';
+            }).join('');
+            if (optsList.innerHTML === "") {
+              optsList.innerHTML = '<div style="padding: 8px; font-size:11px; text-align:center; color:var(--color-text-tertiary);">無符合車種</div>';
+            }
+
+            optsList.querySelectorAll('.mc-opt').forEach(function (opt) {
+              opt.addEventListener('click', function (e) {
+                e.stopPropagation();
+                var tid = parseInt(this.getAttribute('data-tid'));
+                var idx = umDraft[code].indexOf(tid);
+                if (idx >= 0) umDraft[code].splice(idx, 1); else umDraft[code].push(tid);
+                render();
+                updUmSt();
+                wrap.querySelector('.mc-dd').classList.add('open');
+                wrap.querySelector('.mc-search-input').focus();
+              });
+            });
+          });
+
+          wrap.querySelector('.mc-display').addEventListener('click', function (e) {
+            if (e.target.classList.contains('rx')) {
+              var tid = parseInt(e.target.getAttribute('data-tid'));
+              umDraft[code] = umDraft[code].filter(function (x) { return x !== tid; });
+              render();
+              updUmSt();
+              return;
+            }
+            var dd = wrap.querySelector('.mc-dd');
+            var wasOpen = dd.classList.contains('open');
+            document.querySelectorAll('.mc-dd').forEach(function (d) {
+              if (d !== dd && d.classList.contains('open')) d.classList.remove('open');
+            });
+            if (!wasOpen) {
+              dd.classList.add('open');
+              setTimeout(function () { wrap.querySelector('.mc-search-input').focus(); }, 50);
+            } else {
+              dd.classList.remove('open');
+            }
+          });
+
+          wrap.querySelectorAll('.mc-opts-list .mc-opt').forEach(function (opt) {
+            opt.addEventListener('click', function (e) {
+              e.stopPropagation();
+              var tid = parseInt(this.getAttribute('data-tid'));
+              var idx = umDraft[code].indexOf(tid);
+              if (idx >= 0) umDraft[code].splice(idx, 1); else umDraft[code].push(tid);
+              render();
+              updUmSt();
+              wrap.querySelector('.mc-dd').classList.add('open');
+              wrap.querySelector('.mc-search-input').focus();
+            });
+          });
+        }
+        render();
+        document.addEventListener('click', function (e) {
+          var dd = wrap.querySelector('.mc-dd');
+          if (dd && dd.classList.contains('open') && !wrap.contains(e.target)) {
+            dd.classList.remove('open');
+          }
+        });
+      }
+
+      document.getElementById('umBtn').addEventListener('click', openUm);
+      document.getElementById('umCx').addEventListener('click', function () {
+        document.getElementById('umMo').style.display = 'none';
+      });
+      document.getElementById('umMo').addEventListener('click', function (e) {
+        if (e.target === this) this.style.display = 'none';
+      });
+      document.getElementById('umSv').addEventListener('click', saveUm);
+      function toast(msg) { var el = document.getElementById('toast'); el.textContent = msg; el.classList.add('show'); setTimeout(function () { el.classList.remove('show'); }, 2200); }
+      renderSidebar(); updBadge(); initGSrchOptions();
+    </script>
+
+  </div>
+</body>
+
+</html>
